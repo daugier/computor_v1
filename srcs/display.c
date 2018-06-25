@@ -22,7 +22,7 @@ void			make_polynome(double *x, int degres)
 		resolve_zero(x);
 }
 
-void			aff_reduce_form(double *x, int count)
+void			aff_reduce_form(double *x, int count, char *str)
 {
 	int		i;
 
@@ -30,27 +30,27 @@ void			aff_reduce_form(double *x, int count)
 	ft_printf("Reduced form: ");
 	while (++i <= count)
 	{
-		if (i == 0)
+		if (i == 0 && str[i] == 'i')
 			ft_printf("%f * X^%d ", x[i], i);
-		else
+		else if (str[i] == 'i')
 		{
 			if (x[i] < 0)
 				ft_printf("- %f * X^%d ", x[i] * -1, i);
-			else if (x[i] != 0)
+			else
 				ft_printf("+ %f * X^%d ", x[i], i);
 		}
 	}
 	ft_printf("= 0\n");
 }
 
-void			display(double *x, int count)
+void			display(double *x, int count, char *str)
 {
 	int j;
 	int degres;
 
 	j = -1;
 	degres = 0;
-	aff_reduce_form(x, count);
+	aff_reduce_form(x, count, str);
 	while (++j <= count)
 	{
 		if (x[j] != 0)

@@ -16,7 +16,7 @@
 # include "../libft/libft.h"
 
 double			*parse_argument(char *av);
-void			display(double *x, int count);
+void			display(double *x, int count, char *str);
 void			resolve_second(double *x);
 void			resolve_premier(double *x);
 void			resolve_zero(double *x);

@@ -27,18 +27,24 @@ int				count_exposant(char *av)
 	return (count);
 }
 
-void			ft_init_tab(double *x, int number)
+char			*ft_init_tab(double *x, int number)
 {
 	int		i;
+	char 	*tmp;
 
 	i = -1;
+	if (!(tmp = (char *)malloc(sizeof(char) * number + 2)))
+		exit(0);
 	while (++i <= number)
 	{
+		tmp[i] = 'u';
 		x[i] = 0;
 	}
+	tmp[i] = '\0';
+	return (tmp);
 }
 
-int				stock_exposant(char *av, int i, double *x, int end)
+int				stock_exposant(char *av, int i, double *x, int end, char *str)
 {
 	double	tmp;
 	int		neg;
@@ -55,6 +61,7 @@ int				stock_exposant(char *av, int i, double *x, int end)
 	while (av[i] != '^' && av[i])
 		i++;
 	i++;
+	str[ft_atoi(av + i)] = 'i';
 	x[ft_atoi(av + i)] += tmp;
 	if (av[i + 1] != '\0')
 		return (i + 1);
@@ -67,21 +74,20 @@ double			*parse_argument(char *av)
 	int		i;
 	int		end;
 	int		count;
-	int		j;
+	char	*tmp;
 
 	i = -1;
 	end = 1;
-	j = -1;
 	count = count_exposant(av);
 	if (!(x = (double *)malloc(sizeof(double) * count + 1)))
 		exit(0);
-	ft_init_tab(x, count);
+	tmp = ft_init_tab(x, count);
 	while (av[++i])
 	{
 		if (av[i] == '=')
 			end = -1;
-		i = stock_exposant(av, i, x, end);
+		i = stock_exposant(av, i, x, end, tmp);
 	}
-	display(x, count);
+	display(x, count, tmp);
 	return (x);
 }
